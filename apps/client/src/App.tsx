@@ -7,15 +7,44 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from '@/components/ui/sonner';
+import Home from '@/pages/Home';
+import Notfound from '@/pages/Notfound';
+import LoginForm from '@/pages/Login';
+import SignupForm from '@/pages/Signup';
+import LandlordDashboard from './pages/LandlordDashboard';
 
-const appRoutes = createBrowserRouter([]);
+const appRoutes = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />
+  },
+  {
+    path: "/login",
+    element: <LoginForm />
+  },
+  {
+    path: "/signup",
+    element: <SignupForm />
+  },
+  {
+    path: "/landlord/dashboard",
+    element: <LandlordDashboard />
+  },
+  {
+    path: "*",
+    element: <Notfound />
+  }
+]);
 
 export default function App() {
   return (
-    <QueryClientProvider client={new QueryClient()}>
-      <RouterProvider router={appRoutes} />
-      <Toaster position="top-center" />
-    </QueryClientProvider>
+    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+      <QueryClientProvider client={new QueryClient()}>
+        <RouterProvider router={appRoutes} />
+        <Toaster position="top-center" richColors />
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
